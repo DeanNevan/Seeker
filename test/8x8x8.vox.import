@@ -1,0 +1,15 @@
+[remap]
+
+importer="VoxelCore.MagicaVoxel.Mesh"
+type="Mesh"
+path="res://.import/8x8x8.vox-d67c1ab34d26ec72d8ac958c35dc4d6d.mesh"
+
+[deps]
+
+source_file="res://test/8x8x8.vox"
+dest_files=[ "res://.import/8x8x8.vox-d67c1ab34d26ec72d8ac958c35dc4d6d.mesh" ]
+
+[params]
+
+MeshType=1
+Center=0

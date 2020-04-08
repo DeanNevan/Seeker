@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://test/Cubes/Base/5/ButtonBuildCube_TestBase5.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Arts/BuildButtons/TestCubeBase5.png" type="Texture" id=2]
+[ext_resource path="res://test/Cubes/Base/5/BuildCube_TestBase5.tscn" type="PackedScene" id=3]
+
+[node name="ButtonBuildCube_TestBase5" type="TextureButton"]
+margin_right = 100.0
+margin_bottom = 100.0
+texture_normal = ExtResource( 2 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+CUBE_BUILD = ExtResource( 3 )

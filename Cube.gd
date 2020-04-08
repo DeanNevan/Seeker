@@ -1,0 +1,10 @@
+extends Node
+
+enum TYPE{
+	BASE
+	ENERGY
+	ENGINE
+	WEAPON
+	SHIELD
+	FUNC
+}

@@ -1,0 +1,27 @@
+[gd_scene format=2]
+
+[node name="RemoteTransformPoints" type="Spatial"]
+
+[node name="0" type="RemoteTransform" parent="."]
+transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 2, 0, 0 )
+remote_path = NodePath("../..")
+
+[node name="1" type="RemoteTransform" parent="."]
+transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -2, 0, 0 )
+remote_path = NodePath("../..")
+
+[node name="2" type="RemoteTransform" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
+remote_path = NodePath("../..")
+
+[node name="3" type="RemoteTransform" parent="."]
+transform = Transform( -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, -2, 0 )
+remote_path = NodePath("../..")
+
+[node name="4" type="RemoteTransform" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 2 )
+remote_path = NodePath("../..")
+
+[node name="5" type="RemoteTransform" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -2 )
+remote_path = NodePath("../..")

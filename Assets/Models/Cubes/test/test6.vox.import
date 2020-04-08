@@ -1,0 +1,15 @@
+[remap]
+
+importer="VoxelCore.MagicaVoxel.Mesh"
+type="Mesh"
+path="res://.import/test6.vox-3443cb31889f58d76754ba60cc502f19.mesh"
+
+[deps]
+
+source_file="res://Assets/Models/Cubes/test/test6.vox"
+dest_files=[ "res://.import/test6.vox-3443cb31889f58d76754ba60cc502f19.mesh" ]
+
+[params]
+
+MeshType=1
+Center=0

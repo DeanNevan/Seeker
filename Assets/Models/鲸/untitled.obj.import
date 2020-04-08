@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/untitled.obj-14cc2a274afe10d013f5d04a854ee65d.mesh"
+
+[deps]
+
+files=[ "res://.import/untitled.obj-14cc2a274afe10d013f5d04a854ee65d.mesh" ]
+
+source_file="res://Assets/Models/鲸/untitled.obj"
+dest_files=[ "res://.import/untitled.obj-14cc2a274afe10d013f5d04a854ee65d.mesh", "res://.import/untitled.obj-14cc2a274afe10d013f5d04a854ee65d.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
