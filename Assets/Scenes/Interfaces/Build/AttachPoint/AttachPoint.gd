@@ -28,3 +28,6 @@ func _on_area_exited(area : Area):
 func attach_point(area):
 	attached_point = area
 	emit_signal("attached_area_changed", self, attached_point)
+	#print("使用者user:", user)
+	#print("自身area:", self)
+	#print("连接area:", attached_point)

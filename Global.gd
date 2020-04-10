@@ -21,3 +21,6 @@ func connect_and_detect(return_value):
 		return false
 	return true
 	pass
+
+func transfer_position_3d_to_2d_in_camera(camera : Camera, target_pos : Vector3) -> Vector2:
+	return camera.unproject_position(target_pos)

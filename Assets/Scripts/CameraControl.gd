@@ -77,7 +77,7 @@ func _input(event):
 	if event.is_action_released("key_shift"):
 		max_speed *= 0.5
 	
-	var s = clamp(max_speed.x, 0.1, 12)
+	var s = clamp(max_speed.x, 0.1, 22)
 	max_speed = Vector3(s, s, s)
 	
 	if mouselook:
@@ -109,18 +109,18 @@ func _input(event):
 func _unhandled_input(event):
 	if event.is_action_released("wheel_up"):
 		if Input.is_action_pressed("right_mouse_button"):
-			max_speed += Vector3(0.5, 0.5, 0.5)
+			max_speed += Vector3(1, 1, 1)
 		else:
 			_zoom_speed = -max_zoom_speed
 	if event.is_action_released("wheel_down"):
 		if Input.is_action_pressed("right_mouse_button"):
-			max_speed -= Vector3(0.5, 0.5, 0.5)
+			max_speed -= Vector3(1, 1, 1)
 		else:
 			_zoom_speed = max_zoom_speed
 
 func _process(delta):
-	if privot:
-		_update_distance()
+	#if privot:
+	#	_update_distance()
 	if mouselook and Input.is_action_pressed("right_mouse_button"):
 		_update_mouselook()
 	if movement:
@@ -128,7 +128,7 @@ func _process(delta):
 
 func _physics_process(delta):
 	# Called when collision are enabled
-	_update_distance()
+	#_update_distance()
 	if mouselook and Input.is_action_pressed("right_mouse_button"):
 		_update_mouselook()
 	if movement:

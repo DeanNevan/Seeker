@@ -1,23 +1,39 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://test/test3.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Scenes/Interfaces/Build/BuildInterfaceCamera.tscn" type="PackedScene" id=2]
+[ext_resource path="res://test/test5.gd" type="Script" id=3]
+[ext_resource path="res://Assets/Fonts/SourceHanSansCN-Heavy.otf" type="DynamicFontData" id=4]
+
+[sub_resource type="DynamicFont" id=2]
+size = 45
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 4 )
 
 [sub_resource type="CubeMesh" id=1]
-
-[sub_resource type="PlaneMesh" id=2]
-size = Vector2( 5, 5 )
 
 [node name="test3" type="Spatial"]
 script = ExtResource( 1 )
 
-[node name="a1" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+margin_right = 291.0
+margin_bottom = 79.0
+custom_fonts/font = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="."]
+
+[node name="Spatial" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+script = ExtResource( 3 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial"]
 mesh = SubResource( 1 )
 material/0 = null
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
-mesh = SubResource( 2 )
-material/0 = null
-
 [node name="Camera" parent="." instance=ExtResource( 2 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5.99653, 0, 0 )

@@ -34,3 +34,22 @@ func _on_button_toggled(is_pressed):
 	else:
 		$BuildList.visible = false
 		$Button.text = "展开"
+
+func _on_build_mode_changed(target_mode : int):
+	match target_mode:
+		0:
+			$BrushModeLabel.text = "笔刷模式：添加"
+		1:
+			$BrushModeLabel.text = "笔刷模式：擦除"
+		2:
+			$BrushModeLabel.text = "笔刷模式：旋转"
+		3:
+			$BrushModeLabel.text = "笔刷模式：切换"
+	pass
+
+func _on_camera_mode_changed(target_mode : int):
+	match target_mode:
+		0:
+			$CameraModeLabel.text = "相机模式：飞行"
+		1:
+			$CameraModeLabel.text = "相机模式：锚定"
