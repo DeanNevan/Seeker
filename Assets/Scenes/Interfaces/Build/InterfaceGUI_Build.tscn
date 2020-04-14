@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Assets/Scenes/Interfaces/Build/InterfaceGUI_Build.gd" type="Script" id=1]
 [ext_resource path="res://test/ButtonBuildCube_Test.tscn" type="PackedScene" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://test/Cubes/Base/9/ButtonBuildCube_TestBase9.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Assets/Fonts/SourceHanSansCN-Medium.otf" type="DynamicFontData" id=13]
 [ext_resource path="res://test/Cubes/Base/10/ButtonBuildCube_TestBase10.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Assets/Fonts/SourceHanSansCN-Heavy.otf" type="DynamicFontData" id=15]
 
 [sub_resource type="DynamicFont" id=1]
 size = 32
@@ -29,6 +30,11 @@ font_data = ExtResource( 7 )
 size = 36
 use_filter = true
 font_data = ExtResource( 13 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 28
+use_filter = true
+font_data = ExtResource( 15 )
 
 [node name="BuildInterfaceGUI" type="Control"]
 anchor_right = 1.0
@@ -51,7 +57,7 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="BuildList"]
 margin_right = 1920.0
-margin_bottom = 174.0
+margin_bottom = 175.0
 mouse_filter = 2
 
 [node name="SwitchList" type="HBoxContainer" parent="BuildList/VBoxContainer"]
@@ -247,9 +253,9 @@ custom_constants/separation = 100
 [node name="Button" type="Button" parent="."]
 anchor_top = 0.756
 anchor_bottom = 0.756
-margin_top = -80.48
+margin_top = -48.48
 margin_right = 140.0
-margin_bottom = -10.48
+margin_bottom = 21.52
 size_flags_horizontal = 0
 size_flags_vertical = 0
 custom_fonts/font = SubResource( 2 )
@@ -260,8 +266,10 @@ __meta__ = {
 }
 
 [node name="BrushModeLabel" type="Label" parent="."]
-margin_right = 210.0
-margin_bottom = 31.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 260.0
+margin_bottom = 45.0
 custom_fonts/font = SubResource( 3 )
 text = "笔刷模式：添加"
 __meta__ = {
@@ -271,10 +279,55 @@ __meta__ = {
 [node name="CameraModeLabel" type="Label" parent="."]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -252.0
-margin_bottom = 37.0
+margin_left = -1912.0
+margin_top = 64.0
+margin_right = -1660.0
+margin_bottom = 101.0
 custom_fonts/font = SubResource( 3 )
 text = "相机模式：飞行"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Info" type="Control" parent="."]
+margin_left = 16.0
+margin_top = 136.0
+margin_right = 280.0
+margin_bottom = 736.0
+rect_clip_content = true
+mouse_filter = 2
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Rect" type="ColorRect" parent="Info"]
+show_behind_parent = true
+margin_right = 264.0
+margin_bottom = 600.0
+color = Color( 0.286275, 0.286275, 0.286275, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Info" type="RichTextLabel" parent="Info"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 256.0
+margin_bottom = 584.0
+rect_min_size = Vector2( 175, 0 )
+mouse_filter = 2
+custom_fonts/normal_font = SubResource( 4 )
+bbcode_enabled = true
+bbcode_text = "[center]名称[/center]
+----------------------
+信息介绍
+----------------------"
+text = "名称
+----------------------
+信息介绍
+----------------------"
+scroll_following = true
 __meta__ = {
 "_edit_use_anchors_": false
 }

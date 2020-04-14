@@ -3,8 +3,8 @@
 [ext_resource path="res://Assets/Fonts/SourceHanSansCN-Heavy.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://Assets/Scenes/GUI/Info.gd" type="Script" id=2]
 
-[sub_resource type="DynamicFont" id=1]
-size = 22
+[sub_resource type="DynamicFont" id=4]
+size = 28
 use_filter = true
 font_data = ExtResource( 1 )
 
@@ -39,7 +39,7 @@ margin_bottom = 0.0480003
 rect_min_size = Vector2( 175, 0 )
 rect_pivot_offset = Vector2( 0, 296 )
 mouse_filter = 2
-custom_fonts/normal_font = SubResource( 1 )
+custom_fonts/normal_font = SubResource( 4 )
 bbcode_enabled = true
 bbcode_text = "[center]名称[/center]
 ----------------------

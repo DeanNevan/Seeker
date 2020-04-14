@@ -1,6 +1,6 @@
 extends Spatial
 
-signal BaseBuildCube_changed
+signal BaseBuildCube_changed(BaseBuildCube)
 
 signal BaseBuildCube_attach_point_changed
 
@@ -56,7 +56,8 @@ func _ready():
 	$BuildCubes/BuildCube_TestCore.attached()
 	Ray.enabled = true
 	
-	Global.connect_and_detect(connect("BaseBuildCube_changed", self, "_on_BaseBuildCube_changed"))
+	#Global.connect_and_detect(connect("BaseBuildCube_changed", self, "_on_BaseBuildCube_changed"))
+	Global.connect_and_detect(connect("BaseBuildCube_changed", $BuildInterfaceGUI, "_on_BaseBuildCube_changed"))
 	
 	Global.connect_and_detect(connect("BaseBuildCube_attach_point_changed", self, "_on_BaseBuildCube_attach_point_changed"))
 	
@@ -68,16 +69,16 @@ func _ready():
 	pass # Replace with function body.
 
 func _unhandled_input(event):
-	if event.is_action_pressed("key_space"):
+	if event.is_action_released("key_ctrl"):
 		if $Camera.privot:
 			$Camera.privot = null
 			camera_mode = CAMERA_MODE.FLY
 			emit_signal("camera_mode_changed", CAMERA_MODE.FLY)
-		else:
-			if is_instance_valid(BaseBuildCube):
-				$Camera.set_privot(BaseBuildCube)
-				camera_mode = CAMERA_MODE.PRIVOT
-				emit_signal("camera_mode_changed", CAMERA_MODE.PRIVOT)
+	if event.is_action_pressed("key_ctrl"):
+		if is_instance_valid(BaseBuildCube):
+			$Camera.set_privot(BaseBuildCube)
+			camera_mode = CAMERA_MODE.PRIVOT
+			emit_signal("camera_mode_changed", CAMERA_MODE.PRIVOT)
 	
 	if event.is_action_pressed("key_1"):
 		build_mode = BUILD_MODE.ATTACH
@@ -175,7 +176,7 @@ func update_all_BuildCubes_connection():
 
 func _on_BuildCubes_mouse_in(_Cube):
 	BaseBuildCube = _Cube
-	emit_signal("BaseBuildCube_changed")
+	emit_signal("BaseBuildCube_changed", BaseBuildCube)
 	if BaseBuildCube.has_method("set_outline"):
 		BaseBuildCube.set_outline(true)
 
@@ -186,7 +187,7 @@ func _on_BuildCubes_mouse_out(_Cube):
 	if BaseBuildCube == _Cube:
 		BaseBuildCube = null
 		BaseBuildCube_attach_point = null
-		emit_signal("BaseBuildCube_changed")
+		emit_signal("BaseBuildCube_changed", null)
 
 func update_BaseBuildCube_attach_point():
 	if !is_instance_valid(BaseBuildCube):
@@ -267,7 +268,7 @@ func update_rotating_circles(target_cube : Spatial):
 			var area = target_cube.AttachAreas.get_child(i)
 			circle.global_position = Global.transfer_position_3d_to_2d_in_camera($Camera, area.global_transform.origin)
 			if target_cube.attached_cubes.has(i):
-				circle.modulate = Color.green
+				circle.modulate = Color.blue
 			else:
 				circle.modulate = Color.white
 			
@@ -317,7 +318,7 @@ func _on_changed_BuildTarget(new_BuildTarget):
 		$BuildCubes.add_child(BuildCube)
 		BuildCube.visible = false
 
-func _on_BaseBuildCube_changed():
+func _on_BaseBuildCube_changed(BaseBuildCube):
 	#update_cube_rotating_circle(BaseBuildCube)
 	pass
 

@@ -5,10 +5,15 @@ extends Spatial
 # var a = 2
 # var b = "text"
 func _ready():
-	#print($a1.global_transform.basis.x)
-	#$a1.global_transform.basis = $a1.global_transform.basis.rotated($a1.global_transform.basis.x, 0.5)
-	#Tween1.interpolate_property($a1, "global_transform/basis/y", $a1.global_transform.basis.y, Vector3(1, 0, 0), 3, Tween.TRANS_LINEAR, Tween.EASE_OUT)
-	#Tween1.start()
+	var x = 4
+	var y = 3
+	var z = sqrt(x^2 + y^2)
+	if z < x + y:
+		print("不构成图形")
+	elif z == x + y:
+		print("构成线段")
+	else:
+		print("构成三角形，第三边的边长为：", z)
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
