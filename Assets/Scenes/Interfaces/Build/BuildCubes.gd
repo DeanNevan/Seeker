@@ -12,8 +12,13 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(delta):
+	#var count = 0
+	#for i in get_children():
+	#	if i.is_connected_with_core:
+	#		count += 1
+	#print(count)
+	pass
 
 func update_cubes_connecting_core(from_cube : Spatial):
 	if from_cube.has_method("core"):
@@ -42,5 +47,8 @@ func update_cubes_connecting_core(from_cube : Spatial):
 		new_scanned_cubes = scanned_cubes_this_loop
 	if scanned_core:
 		for i in scanned_cubes:
-			i.is_connected_with_core = true
+			i.set_connection_with_core(true)
+	else:
+		for i in scanned_cubes:
+			i.set_connection_with_core(false)
 	pass

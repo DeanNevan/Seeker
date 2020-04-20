@@ -66,17 +66,21 @@ func _ready():
 	
 	Global.connect_and_detect(connect("camera_mode_changed", $BuildInterfaceGUI, "_on_camera_mode_changed"))
 	Global.connect_and_detect(connect("camera_mode_changed", self, "_on_camera_mode_changed"))
+	
+	
 	pass # Replace with function body.
 
 func _unhandled_input(event):
 	if event.is_action_released("key_ctrl"):
 		if $Camera.privot:
-			$Camera.privot = null
+			$Camera.set_privot(null)
 			camera_mode = CAMERA_MODE.FLY
 			emit_signal("camera_mode_changed", CAMERA_MODE.FLY)
 	if event.is_action_pressed("key_ctrl"):
 		if is_instance_valid(BaseBuildCube):
-			$Camera.set_privot(BaseBuildCube)
+			$Camera.set_privot(BaseBuildCube.get_node("Spatial"))
+			#$Camera.distance = ($Camera.global_transform.origin.distance_to(BaseBuildCube.global_transform.origin))
+			$Camera.look_at(BaseBuildCube.get_node("Spatial").global_transform.origin, Vector3.UP)
 			camera_mode = CAMERA_MODE.PRIVOT
 			emit_signal("camera_mode_changed", CAMERA_MODE.PRIVOT)
 	
@@ -87,21 +91,25 @@ func _unhandled_input(event):
 			$BuildCubes.add_child(BuildCube)
 			BuildCube.visible = false
 		emit_signal("build_mode_changed", BUILD_MODE.ATTACH)
+		emit_signal("BaseBuildCube_attach_point_changed")
 	if event.is_action_pressed("key_2"):
 		build_mode = BUILD_MODE.ERASE
 		if is_instance_valid(BuildCube):
 			BuildCube.queue_free()
 		emit_signal("build_mode_changed", BUILD_MODE.ERASE)
+		emit_signal("BaseBuildCube_attach_point_changed")
 	if event.is_action_pressed("key_3"):
 		build_mode = BUILD_MODE.ROTATE
 		if is_instance_valid(BuildCube):
 			BuildCube.queue_free()
 		emit_signal("build_mode_changed", BUILD_MODE.ROTATE)
+		emit_signal("BaseBuildCube_attach_point_changed")
 	if event.is_action_pressed("key_4"):
 		build_mode = BUILD_MODE.SWITCH
 		if is_instance_valid(BuildCube):
 			BuildCube.queue_free()
 		emit_signal("build_mode_changed", BUILD_MODE.SWITCH)
+		emit_signal("BaseBuildCube_attach_point_changed")
 	
 	if event.is_action_pressed("left_mouse_button"):
 		match build_mode:
@@ -178,12 +186,12 @@ func _on_BuildCubes_mouse_in(_Cube):
 	BaseBuildCube = _Cube
 	emit_signal("BaseBuildCube_changed", BaseBuildCube)
 	if BaseBuildCube.has_method("set_outline"):
-		BaseBuildCube.set_outline(true)
+		BaseBuildCube.set_outline(true, 0.1, Color.white)
 
 func _on_BuildCubes_mouse_out(_Cube):
 	if is_instance_valid(_Cube):
 		if _Cube.has_method("set_outline"):
-			_Cube.set_outline(false)
+			_Cube.set_outline(false, 0.1, Color.white)
 	if BaseBuildCube == _Cube:
 		BaseBuildCube = null
 		BaseBuildCube_attach_point = null

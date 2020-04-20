@@ -4,6 +4,8 @@ signal changed_BuildTarget(BuildTarget)
 
 var BaseBuildCube
 
+var is_Info_opened = false
+
 onready var Tween1 = Tween.new()
 
 func _ready():
@@ -30,14 +32,19 @@ func _process(delta):
 
 func _on_BaseBuildCube_changed(_BaseBuildCube):
 	if is_instance_valid(_BaseBuildCube):
+		is_Info_opened = true
 		Tween1.interpolate_property($Info, "rect_size", $Info.rect_size, Vector2(264, 600), 0.15, Tween.TRANS_LINEAR, Tween.EASE_OUT)
 		Tween1.start()
 		BaseBuildCube = _BaseBuildCube
 		set_process(true)
 	else:
-		Tween1.interpolate_property($Info, "rect_size", $Info.rect_size, Vector2(264, 0), 0.25, Tween.TRANS_LINEAR, Tween.EASE_OUT)
-		Tween1.start()
-		set_process(false)
+		is_Info_opened = false
+		yield(get_tree(), "idle_frame")
+		if !is_Info_opened:
+			Tween1.interpolate_property($Info, "rect_size", $Info.rect_size, Vector2(264, 0), 0.25, Tween.TRANS_LINEAR, Tween.EASE_OUT)
+			Tween1.start()
+			BaseBuildCube = null
+			set_process(false)
 		pass
 
 func _on_changed_BuildTarget(BuildTarget):

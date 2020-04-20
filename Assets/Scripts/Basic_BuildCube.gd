@@ -21,7 +21,7 @@ var area_to_index := {}#{area:index}
 var attached_cubes := {}#{index:Cube}
 var attached_areas := {}#{index:Area}
 
-var is_connected_with_core := false
+var is_connected_with_core := false setget set_connection_with_core
 
 onready var area = $Spatial/Spatial/Area
 onready var AttachAreas = $Spatial/Spatial/AttachAreas
@@ -29,6 +29,8 @@ onready var AttachAreas = $Spatial/Spatial/AttachAreas
 var Model : MeshInstance
 var Model_material : Material
 var Model_outline_shader : Material
+
+var lock_outline = false
 
 onready var LightBuild = OmniLight.new()
 onready var TweenLightBuild = Tween.new()
@@ -58,22 +60,22 @@ func _ready():
 	
 	Model.set_layer_mask_bit(0, false)
 	Model.set_layer_mask_bit(1, true)
+	
+	set_process(false)
 	pass # Replace with function body.
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if on_mouse and Input.is_action_just_pressed("key_space"):
-		update_connection_with_core()
-	#if !is_connected_with_core:
-	#	set_outline(true, 0.1, Color.red)
+	if !is_connected_with_core:
+		set_outline(true, 0.14, Color.red)
 	pass
 
 #返回area
 func get_attach_point(pos : Vector3):
 	var min_distance = 1000
 	var attach_area : Area
-	update_connection_with_core()
+	#update_connection_with_core()
 	update_attached_cubes_areas()
 	erase_unvalid_attached_cubes_areas()
 	for i in AttachAreas.get_child_count():
@@ -174,16 +176,19 @@ func smooth_change_LightBuild_energy(new_energy = 1, change_time = 0.3, delete_c
 			queue_free()
 
 func attached():
+	set_process(true)
 	area.input_ray_pickable = true
 	is_built = true
 	Model.set_layer_mask_bit(1, false)
 	Model.set_layer_mask_bit(0, true)
 	
 	yield(get_tree(), "idle_frame")
-	update_connection_with_core()
+	update_attached_cubes_areas()
 	for i in attached_cubes.values():
 		i.update_attached_cubes_areas()
-	update_attached_cubes_areas()
+		i.update_connection_with_core()
+	update_connection_with_core()
+	
 	#print(attached_areas)
 	#print(attached_cubes)
 	#print("---")
@@ -193,29 +198,40 @@ func attached():
 	pass
 
 func erased():
+	visible = false
+	$Spatial.global_translate(Vector3(10, 10, 10))
+	$Spatial.force_update_transform()
+	is_connected_with_core = false
 	yield(get_tree(), "idle_frame")
-	update_connection_with_core()
-	for i in attached_cubes.values():
-		i.update_attached_cubes_areas()
+	var a = attached_cubes.values().duplicate()
 	update_attached_cubes_areas()
-	#yield(get_tree(), "idle_frame")
+	for i in a:
+		i.update_attached_cubes_areas()
+		yield(get_tree(), "idle_frame")
+		i.update_connection_with_core()
 	queue_free()
 	pass
 
 func rotated():
 	yield(get_tree(), "idle_frame")
-	update_connection_with_core()
-	for i in attached_cubes.values():
-		i.update_attached_cubes_areas()
+	var a = attached_cubes.values().duplicate()
 	update_attached_cubes_areas()
+	for i in a:
+		i.update_attached_cubes_areas()
+		yield(get_tree(), "idle_frame")
+		i.update_connection_with_core()
+	update_connection_with_core()
 	pass
 
 func switched():
 	yield(get_tree(), "idle_frame")
-	update_connection_with_core()
-	for i in attached_cubes.values():
-		i.update_attached_cubes_areas()
+	var a = attached_cubes.values().duplicate()
 	update_attached_cubes_areas()
+	for i in a:
+		i.update_attached_cubes_areas()
+		yield(get_tree(), "idle_frame")
+		i.update_connection_with_core()
+	update_connection_with_core()
 	pass
 
 func update_attached_cubes_areas():
@@ -258,12 +274,21 @@ func erase_unvalid_attached_cubes_areas():
 			attached_areas.erase(i)
 
 func set_outline(enabled = -1, thickness = -1, color = -1):
+	if lock_outline:
+		return
 	if typeof(enabled) != TYPE_INT:
 		Model_outline_shader.set_shader_param("enable", enabled)
 	if typeof(thickness) != TYPE_INT:
 		Model_outline_shader.set_shader_param("outline_thickness", thickness)
 	if typeof(color) != TYPE_INT:
 		Model_outline_shader.set_shader_param("color", color)
+
+func set_connection_with_core(is_connected):
+	is_connected_with_core = is_connected
+	if is_connected_with_core:
+		set_outline(false, 0.1, Color.white)
+	else:
+		set_outline(true, 0.14, Color.red)
 
 func _on_attached_area_changed(area, attached_area):
 	#if attached_area == null:
